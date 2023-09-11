@@ -14,6 +14,11 @@
 void sig_handler(int sig);
 double evaluate_expression(const char *expression);
 
+/**
+ * main - main function
+ *
+ * Return: 0
+ */
 int main(void)
 {
 	signal(SIGINT, sig_handler);
@@ -21,9 +26,10 @@ int main(void)
 	while (1)
 	{
 	char input[256];
-	printf("Enter a mathematical expression (or 'exit' to quit): ");
 
-	if (fgets(input, sizeof(input), stdin) == NULL) 
+	printf("Enter a mathematical expression (or 'exit' to quit): ";
+
+	if (fgets(input, sizeof(input), stdin) == NULL)
 	{
 	printf("\n");
 	break;
@@ -31,43 +37,50 @@ int main(void)
 
 	input[strcspn(input, "\n")] = '\0';
 
-	if (strcmp(input, "exit") == 0) 
+	if (strcmp(input, "exit") == 0)
 	{
 	printf("Goodbye!\n");
 	break;
 
 	}
 	double result = evaluate_expression(input);
+
 	printf("Result: %lf\n", result);
 	}
 
-	return 0;
-	}
+	return (0);
+}
 
 	void sig_handler(int sig);
 	{
 	(void)sig;
 	signal(SIGINT, sig_handler);
-    	printf("\n");
+	printf("\n");
 	}
-	double evaluate_expression(const char *expression) 
+/**
+ * evaluate_expression - evaluates an expression
+ * @expression: expression to be evaluated
+ * Return: NAN
+ */
+	double evaluate_expression(const char *expression)
 	{
 	char *endptr;
 	double result = strtod(expression, &endptr);
-	if (*endptr == '\0'); 
+
+	if (*endptr == '\0')
 	{
-	return result;
+	return (result);
 	}
 	else
 	{
-	if (eval(expression, &result) == 0) 
+	if (eval(expression, &result) == 0)
 	{
-	return result;
+	return (result);
 	}
 	else
 	{
 	printf("Error: Invalid expression\n");
-	return NAN;
+	return (NAN);
 	}
 	}
 }
