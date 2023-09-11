@@ -125,9 +125,9 @@ char *findpath(info_t *, char *, char *);
 int loop_hsh(char **);
 
 /* errors.c */
-void _puts(char *);
-int _putchar(char);
-int _putf(char c, int f);
+void _puts(char *str);
+int _putchar(char ch);
+int _putf(char ch, int f);
 int _putsf(char *str, int f);
 
 /* string.c */
