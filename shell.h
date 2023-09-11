@@ -173,7 +173,7 @@ char *convertnumber(long int, int, int);
 void rm_comments(char *);
 
 /* builtin.c */
-int _exit(info_t *);
+int _exit(info_t *info);
 int _cd(info_t *);
 int help(info_t *);
 
@@ -214,7 +214,7 @@ int _numberhistory(info_t *info);
 list_t *addnode(list_t **, const char *, int);
 list_t *addnode_end(list_t **, const char *, int);
 size_t print_strlist(const list_t *);
-int delete_nod(list_t **, unsigned int);
+int delete_node(list_t **, unsigned int);
 void freelist(list_t **);
 
 /* lists1.c */
