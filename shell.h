@@ -166,11 +166,11 @@ int isalpha(int);
 int atoi(char *);
 
 /* errors1.c */
-int err_atoi(char *);
-void printerr(info_t *, char *);
-int printd(int, int);
-char *convertnumber(long int, int, int);
-void rm_comments(char *);
+int err_atoi(char *e);
+void printerr(info_t *p, char *str);
+int printd(int in, int fd);
+char *convertnumber(long int n, int b, int f);
+void rm_comments(char *buff);
 
 /* builtin.c */
 int _exit(info_t *info);

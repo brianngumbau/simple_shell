@@ -27,7 +27,7 @@ list *addnode(list_t **head, const char *str, int index)
 			free(newhead);
 			return (NULL);
 			}
-	
+
 	}
 
 
