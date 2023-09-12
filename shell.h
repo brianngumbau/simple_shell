@@ -125,9 +125,9 @@ char *findpath(info_t *, char *, char *);
 int loop_hsh(char **);
 
 /* errors.c */
-void _puts(char *);
-int _putchar(char);
-int _putf(char c, int f);
+void _puts(char *str);
+int _putchar(char ch);
+int _putf(char ch, int f);
 int _putsf(char *str, int f);
 
 /* string.c */
@@ -166,14 +166,14 @@ int isalpha(int);
 int atoi(char *);
 
 /* errors1.c */
-int err_atoi(char *);
-void printerr(info_t *, char *);
-int printd(int, int);
-char *convertnumber(long int, int, int);
-void rm_comments(char *);
+int err_atoi(char *e);
+void printerr(info_t *p, char *str);
+int printd(int in, int fd);
+char *convertnumber(long int n, int b, int f);
+void rm_comments(char *buff);
 
 /* builtin.c */
-int _exit(info_t *);
+int _exit(info_t *info);
 int _cd(info_t *);
 int help(info_t *);
 
@@ -182,14 +182,17 @@ int _history(info_t *);
 int _alias(info_t *);
 
 /*getline.c */
-ssize_t _input(info_t *);
-int getline(info_t *, char **, size_t *);
+ssize_t _input(info_t *info, char **buff, size_t *length);
+ssize_t inputbuff(info_t *info, char **buff, size_t *length);
+ssize_t getinput(info_t *info);
+ssize_t readbuff(info_t *info, char *buff, size_t *s);
+int getline(info_t *info, char **add, size_t *len);
 void handler(int);
 
 /* getinfo.c */
-void clear(info_t *);
-void set(info_t *, char **);
-void free(info_t *, int);
+void clear(info_t *info);
+void set(info_t *info, char **q);
+void free(info_t *info, int k);
 
 /* environ.c */
 char *getenv(info_t *, const char *);
@@ -214,7 +217,7 @@ int _numberhistory(info_t *info);
 list_t *addnode(list_t **, const char *, int);
 list_t *addnode_end(list_t **, const char *, int);
 size_t print_strlist(const list_t *);
-int delete_nod(list_t **, unsigned int);
+int delete_node(list_t **, unsigned int);
 void freelist(list_t **);
 
 /* lists1.c */
