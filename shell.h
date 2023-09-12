@@ -182,14 +182,17 @@ int _history(info_t *);
 int _alias(info_t *);
 
 /*getline.c */
-ssize_t _input(info_t *);
-int getline(info_t *, char **, size_t *);
+ssize_t _input(info_t *info, char **buff, size_t *length);
+ssize_t inputbuff(info_t *info, char **buff, size_t *length);
+ssize_t getinput(info_t *info);
+ssize_t readbuff(info_t *info, char *buff, size_t *s);
+int getline(info_t *info, char **add, size_t *len);
 void handler(int);
 
 /* getinfo.c */
-void clear(info_t *);
-void set(info_t *, char **);
-void free(info_t *, int);
+void clear(info_t *info);
+void set(info_t *info, char **q);
+void free(info_t *info, int k);
 
 /* environ.c */
 char *getenv(info_t *, const char *);
