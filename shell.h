@@ -117,9 +117,9 @@ void cmd(info_t *);
 void fork_cmd(info_t *);
 
 /* path.c */
-int cmd(info_t *, char *);
-char *duplicate_chars(char *, int, int);
-char *findpath(info_t *, char *, char *);
+int cmd(info_t *info, char *p);
+char *duplicate_chars(char *ps, int begin, int st);
+char *findpath(info_t *info, char *ps, char *cmd);
 
 /* loop_hsh.c */
 int loop_hsh(char **);
