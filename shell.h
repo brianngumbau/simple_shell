@@ -152,9 +152,9 @@ char **strtok_(char *, char *);
 char **strtok_(char *, char);
 
 /* realloc.c */
-char *_memset(char *, char, unsigned int);
-void free(char **);
-void *_realloc(void *, unsigned int, unsigned int);
+char *mem_set(char *p, char byt, unsigned int i);
+void f_ree(char **ss);
+void *re_alloc(void *p, unsigned int o_size, unsigned int n_size);
 
 /* mem.c */
 void free_(void **add);
@@ -228,10 +228,10 @@ list_t *node_start(list_t *, char *, char);
 ssize_t node_index(list_t *, list_t *);
 
 /* var.c */
-int chain(in_ *, char *, size_t *);
-void checkchain(in_ *, char *, size_t *, size_t, size_t);
-int rep_alias(in_ *);
-int rep_vars(in_ *);
-int rep_string(char **, char *);
+int chain(in_ *in, char *buff, size_t *add);
+void ckchain(in_ *in, char *buff, size_t *add, size_t s, size_t length);
+int rep_alias(in_ *in);
+int rep_vars(in_ *in);
+int rep_str(char **ol, char *nw);
 
 #endif
