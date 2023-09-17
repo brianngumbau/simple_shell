@@ -92,7 +92,7 @@ typedef struct info
 	int cmd_bufftype;
 	int readf;
 	int hcount;
-} info_t;
+} in_;
 
 #define INFO_INIT_ \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
@@ -106,20 +106,20 @@ typedef struct info
 typedef struct builtin
 {
 	char *type;
-	int (*funct)(info_t *);
+	int (*funct)(in_ *);
 } builtin_t;
 
 
 /*loop.c */
-int hsh(info_t *, char **);
-int builtin(info_t *);
-void cmd(info_t *);
-void fork_cmd(info_t *);
+int loop(in_ *in, char **argv);
+int builtin(in_ *in);
+void cmd(in_ *in);
+void f_cmd(in_ *in);
 
 /* path.c */
-int cmd(info_t *info, char *p);
+int cmd(in_ *info, char *p);
 char *duplicate_chars(char *ps, int begin, int st);
-char *findpath(info_t *info, char *ps, char *cmd);
+char *findpath(in_ *info, char *ps, char *cmd);
 
 /* loop_hsh.c */
 int loop_hsh(char **);
@@ -131,25 +131,25 @@ int _putf(char ch, int f);
 int _putsf(char *str, int f);
 
 /* string.c */
-int _strlen(char *);
-int _strcmp(char *, char *);
+int _str_len(char *);
+int _str_cmp(char *, char *);
 char *starts(const char *, const char *);
-char *_strcat(char *, char *);
+char *_str_cat(char *, char *);
 
 /* string1.c */
-char *_strcpy(char *, char *);
-char *_strdup(const char *);
+char *_str_cpy(char *, char *);
+char *_str_dup(const char *);
 void _puts(char *);
 int _putchar(char);
 
 /* exit.c */
-char *_strncpy(char *, char *, int);
-char *_strncat(char *, char *, int);
-char *_strchr(char *, char);
+char *str_ncpy(char *d, char *s, int i);
+char *str_ncat(char *d, char *s, int i);
+char *str_chr(char *str, char ch);
 
 /* token.c */
-char **strtok(char *, char *);
-char **strtok(char *, char);
+char **strtok_(char *, char *);
+char **strtok_(char *, char);
 
 /* realloc.c */
 char *_memset(char *, char, unsigned int);
@@ -157,61 +157,61 @@ void free(char **);
 void *_realloc(void *, unsigned int, unsigned int);
 
 /* mem.c */
-int free(void **);
+void free_(void **add);
 
-/* atoi.c */
-int inter(info_t *);
-int delim(char, char *);
-int isalpha(int);
-int atoi(char *);
+/*_atoi.c */
+int inter_(in_ *);
+int delim_(char, char *);
+int isalpha_(int);
+int atoi_(char *);
 
 /* errors1.c */
 int err_atoi(char *e);
-void printerr(info_t *p, char *str);
+void printerr(in_ *p, char *str);
 int printd(int in, int fd);
 char *convertnumber(long int n, int b, int f);
 void rm_comments(char *buff);
 
 /* builtin.c */
-int _exit(info_t *info);
-int _cd(info_t *);
-int help(info_t *);
+int _exit(in_ *info);
+int _cd(in_ *);
+int help(in_ *);
 
 /* builtin1.c */
-int _history(info_t *);
-int _alias(info_t *);
+int _history(in_ *);
+int _alias(in_ *);
 
 /*getline.c */
-ssize_t _input(info_t *info, char **buff, size_t *length);
-ssize_t inputbuff(info_t *info, char **buff, size_t *length);
-ssize_t getinput(info_t *info);
-ssize_t readbuff(info_t *info, char *buff, size_t *s);
-int getline(info_t *info, char **add, size_t *len);
+ssize_t _input(in_ *info, char **buff, size_t *length);
+ssize_t inputbuff(in_ *info, char **buff, size_t *length);
+ssize_t getinput(in_ *info);
+ssize_t readbuff(in_ *info, char *buff, size_t *s);
+int getline(in_ *info, char **add, size_t *len);
 void handler(int);
 
 /* getinfo.c */
-void clear(info_t *info);
-void set(info_t *info, char **q);
-void free(info_t *info, int k);
+void clear(in_ *info);
+void set(in_ *info, char **q);
+void free(in_ *info, int k);
 
 /* environ.c */
-char *getenv(info_t *, const char *);
-int _env(info_t *);
-int setenv(info_t *);
-int unsetenv(info_t *);
-int _env_list(info_t *);
+char *getenv_(in_ *, const char *);
+int _env(in_ *);
+int setenv(in_ *);
+int unsetenv(in_ *);
+int _env_list(in_ *);
 
 /* getenv.c */
-char **_getenviron(info_t *);
-int unsetenv(info_t *, char *);
-int setenv(info_t *, char *, char *);
+char **_getenviron(in_ *);
+int unsetenv(in_ *, char *);
+int setenv(in_ *, char *, char *);
 
 /* history.c */
-char *gethistory_file(info_t *info);
-int w_history(info_t *info);
-int r_history(info_t *info);
-int build_historylist(info_t *info, char *buf, int linecount);
-int _numberhistory(info_t *info);
+char *gethistory_file(in_ *in);
+int w_history(in_ *in);
+int r_history(in_ *in);
+int build_historylist(in_ *in, char *buff, int line_count);
+int _numberhistory(in_ *in);
 
 /* lists.c */
 list_t *addnode(list_t **, const char *, int);
@@ -228,10 +228,10 @@ list_t *node_start(list_t *, char *, char);
 ssize_t node_index(list_t *, list_t *);
 
 /* var.c */
-int chain(info_t *, char *, size_t *);
-void checkchain(info_t *, char *, size_t *, size_t, size_t);
-int rep_alias(info_t *);
-int rep_vars(info_t *);
+int chain(in_ *, char *, size_t *);
+void checkchain(in_ *, char *, size_t *, size_t, size_t);
+int rep_alias(in_ *);
+int rep_vars(in_ *);
 int rep_string(char **, char *);
 
 #endif

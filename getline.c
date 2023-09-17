@@ -47,7 +47,7 @@ char *string_concat(const char *s1, const char *s2) {
  * @length: address
  * Return: bytes
  */
-ssize_t inputbuff(info_t *info, char **buff, size_t *length)
+ssize_t inputbuff(in_ *info, char **buff, size_t *length)
 {
 	ssize_t g = 0;
 	size_t l = 0;
@@ -85,7 +85,7 @@ ssize_t inputbuff(info_t *info, char **buff, size_t *length)
  * Return: bytes
  */
 
-ssize_t getinput(info_t *info)
+ssize_t getinput(in_ *info)
 {
 	static char *buff;
 	static size_t a, b, length;

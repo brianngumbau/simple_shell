@@ -98,4 +98,58 @@ size_t print_strlist(const list_t *a)
 
 int delete_node(list_t **head, unsigned int ind)
 {
-	list_t *nod, *
+	list_t *nod, *prevnod;
+	unsigned int j = 0;
+
+	if (!head || !*head)
+		return (0);
+
+	if (!index)
+	{
+		nod = *head;
+		*head = (*head)->next;
+		free_(nod->s);
+		free(nod);
+		free(nod);
+		return (1);
+	}
+	nod = *head;
+	while (nod)
+	{
+		if (j == ind)
+		{
+			prevnode->next = nod->next;
+			free_(nod);
+			free_(nod);
+			return (1);
+		}
+		j++;
+		prevnod = nod;
+		nod = nod->next;
+	}
+	return (0);
+}
+
+/**freelist - frees nodes
+ * @headp: address of pointer to head node
+ * Return: void
+ */
+
+void freelist(list_t **headp)
+{
+	list_t *nod, *nextnod, *head;
+
+	if (!headp || !*headp)
+		return;
+	head = *headp;
+	nod = head;
+	while (nod)
+	{
+		nextnod = nod->next;
+		free_(nod->s);
+		free_(nod);
+		nod = nextnod;
+	}
+	*headp = NULL;
+}
+

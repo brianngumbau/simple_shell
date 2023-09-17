@@ -1,87 +1,44 @@
- /*
- * File: main.c
- * Auth: Brian
- *       Javis
- */
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <signal.h>
-#include <unistd.h>
-#include <math.h>
-
-void sig_handler(int sig);
-double evaluate_expression(const char *expression);
+#include "shell.h"
 
 /**
  * main - main function
- *
- * Return: 0
+ * @argc: argument count
+ * @argv: argument vector
+ * Return: 0 or 1 on error
  */
-int main(void)
+
+int main(int argc, char **argv)
 {
-	signal(SIGINT, sig_handler);
+	in_ info[] = { INFO_INIT };
+	int f = 2;
 
-	while (1)
+	asm ("mov %1, %0\n\t"
+			"add $3, %0"
+			: "=r" (f)
+			: "r" (f));
+
+	if (argc == 2)
 	{
-	char input[256];
-
-	printf("Enter a mathematical expression (or 'exit' to quit): ";
-
-	if (fgets(input, sizeof(input), stdin) == NULL)
-	{
-	printf("\n");
-	break;
+		f = open(argv[1], O_RDONLY);
+		if (f == -1)
+		{
+			if (errno == EACCES)
+				exit(126);
+			if (errno == ENOENT)
+			{
+				_puts(argv[0]);
+				_puts(": 0: Cannot open ");
+				_puts(argv[1]);
+				_putchar('\n');
+				_putchar(BUFFLUSH);
+				exit (127);
+			}
+			return(EXIT_FAILURE);
+		}
+		info->readf = f;
 	}
-
-	input[strcspn(input, "\n")] = '\0';
-
-	if (strcmp(input, "exit") == 0)
-	{
-	printf("Goodbye!\n");
-	break;
-
-	}
-	double result = evaluate_expression(input);
-
-	printf("Result: %lf\n", result);
-	}
-
-	return (0);
+	_env_list(info);
+	r_history(info);
+	hsh(info, argv);
+	return (EXIT_SUCCESS);
 }
-
-	void sig_handler(int sig);
-	{
-	(void)sig;
-	signal(SIGINT, sig_handler);
-	printf("\n");
-	}
-/**
- * evaluate_expression - evaluates an expression
- * @expression: expression to be evaluated
- * Return: NAN
- */
-	double evaluate_expression(const char *expression)
-	{
-	char *endptr;
-	double result = strtod(expression, &endptr);
-
-	if (*endptr == '\0')
-	{
-	return (result);
-	}
-	else
-	{
-	if (eval(expression, &result) == 0)
-	{
-	return (result);
-	}
-	else
-	{
-	printf("Error: Invalid expression\n");
-	return (NAN);
-	}
-	}
-}
-

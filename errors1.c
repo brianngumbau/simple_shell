@@ -30,12 +30,12 @@ int err_atoi(char *e)
 
 /**
  * printerr - prints error
- * @f: info struct
+ * @f: struct
  * @str: string with specified error type
  * Return: void
  */
 
-void printerr(info_t *f, char *str)
+void printerr(in_ *f, char *str)
 {
 	_puts(f->fname);
 	_puts(": ");

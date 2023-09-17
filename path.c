@@ -6,7 +6,7 @@
  * Return: 1  else 0 otherwise
  */
 
-int cmd(info_t *info, char *p)
+int cmd(in_ *info, char *p)
 {
 	struct kso st;
 
@@ -46,7 +46,7 @@ char *duplicate_chars(char *ps, int begin, int st)
  * Return: path of cmd/ NULL
  */
 
-char *findpath(info_t *info, char *ps, char *cmd)
+char *findpath(in_ *info, char *ps, char *cmd)
 {
 	int a = 0, pos = 0;
 	char *ps;

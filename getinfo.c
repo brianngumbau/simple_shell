@@ -6,7 +6,7 @@
  * Return: empty
  */
 
-void clear(info_t *info)
+void clear(in_ *info)
 {
 	info->str = NULL;
 	info->arr = NULL;
@@ -19,7 +19,7 @@ void clear(info_t *info)
  * @q: argv
  * Return: empty
  */
-void set(info_t *info, char **q)
+void set(in_ *info, char **q)
 {
 	int t = 0;
 
@@ -51,7 +51,7 @@ void set(info_t *info, char **q)
  * @k: true
  */
 
-void free(info_t *info, int k)
+void free(in_t *info, int k)
 {
 	free(info->arr);
 	info->arr = NULL;
