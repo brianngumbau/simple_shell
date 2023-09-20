@@ -52,14 +52,14 @@ int builtin(in_ *in)
 {
 	int x, built_t = -1;
 	builtintable bu[] = {
-		{"exit", _exit},
-		{"env", _env},
-		{"help", help},
-		{"history", _history},
-		{"setenv", setenv},
-		{"unsetenv", unsetenv},
-		{"cd", _cd},
-		{"alias", _alias},
+		{'exit', _exit},
+		{'env', _env},
+		{'help', help},
+		{'history', _history},
+		{'setenv', setenv},
+		{'unsetenv', unsetenv},
+		{'cd',_cd},
+		{'alias', _alias},
 		{NULL, NULL}
 	};
 

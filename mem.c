@@ -5,7 +5,7 @@
  * @add: adddress of pointer to free
  * Return: empty
  */
-void free_(void *add)
+void f_ree(void *add)
 {
 	if (add && *add)
 	{

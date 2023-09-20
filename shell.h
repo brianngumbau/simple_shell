@@ -157,7 +157,7 @@ void f_ree(char **ss);
 void *re_alloc(void *p, unsigned int o_size, unsigned int n_size);
 
 /* mem.c */
-void free_(void **add);
+void f_ree(void **add);
 
 /*_atoi.c */
 int inter_(in_ *);
