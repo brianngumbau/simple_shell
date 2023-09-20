@@ -113,11 +113,11 @@ typedef struct builtin
 /*loop.c */
 int loop(in_ *in, char **argv);
 int builtin(in_ *in);
-void cmd(in_ *in);
+void fcmd(in_ *in);
 void f_cmd(in_ *in);
 
 /* path.c */
-int cmd(in_ *info, char *p);
+int cmd_(in_ *info, char *p);
 char *duplicate_chars(char *ps, int begin, int st);
 char *findpath(in_ *info, char *ps, char *cmd);
 
@@ -173,12 +173,15 @@ char *convertnumber(long int n, int b, int f);
 void rm_comments(char *buff);
 
 /* builtin.c */
-int _exit(in_ *info);
-int _cd(in_ *);
-int help(in_ *);
+int _exit(in_ *in);
+int _cd(in_ *in);
+int help(in_ *in);
 
 /* builtin1.c */
 int _history(in_ *);
+int unalias(in_ *);
+int setalias(in_ *in, char *s);
+int palias(list_t *nod);
 int _alias(in_ *);
 
 /*getline.c */
@@ -192,19 +195,19 @@ void handler(int);
 /* getinfo.c */
 void clear(in_ *info);
 void set(in_ *info, char **q);
-void free(in_ *info, int k);
+void free_in(in_ *info, int k);
 
 /* environ.c */
-char *getenv_(in_ *, const char *);
-int _env(in_ *);
-int setenv(in_ *);
-int unsetenv(in_ *);
-int _env_list(in_ *);
+char *getenv_(in_ *, const char *nm);
+int _env(in_ *in);
+int setenv(in_ *in);
+int unsetenv(in_ *in);
+int _env_list(in_ *in);
 
 /* getenv.c */
-char **_getenviron(in_ *);
-int unsetenv(in_ *, char *);
-int setenv(in_ *, char *, char *);
+char **_getenviron(in_ *in);
+int unsetenv(in_ *in, char *v);
+int setenv(in_ *in, char *v, char *val);
 
 /* history.c */
 char *gethistory_file(in_ *in);

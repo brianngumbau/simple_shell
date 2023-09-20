@@ -1,20 +1,20 @@
 #include "shell.h"
 /**
- * cmd - checks for executible commands
- * @info: struct
+ * cmd_ - checks for executible commands
+ * @in: struct
  * @p: the path
  * Return: 1  else 0 otherwise
  */
 
-int cmd(in_ *info, char *p)
+int cmd_(in_ *in, char *p)
 {
-	struct kso st;
+	struct stat st;
 
-	(void)info;
-	if (!p || kso(p, &st))
+	(void)in;
+	if (!p || stat(p, &st))
 		return (0);
 
-	if (st.mode & S_IFREG)
+	if (st.st_mode & S_IFREG)
 	{
 		return (1);
 	}
@@ -29,14 +29,16 @@ int cmd(in_ *info, char *p)
  */
 char *duplicate_chars(char *ps, int begin, int st)
 {
-	static char buff[1024};
+	static char buff[1024];
 	int y = 0, z = 0;
 
 	for (z = 0, y = begin; y < st; y++)
+	{
 		if (ps[y] != ':')
 			buff[z++] = ps[y];
 		buff[z] = 0;
-		return (buff);
+	}
+	return (buff);
 }
 /**
  * findpath - finds cmd

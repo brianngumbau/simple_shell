@@ -30,7 +30,7 @@ char **strtok_(char *s, char *del)
 		while (!delim_(s[a], del))
 			a++;
 		c = 0;
-		c[b] = malloc((c + 1) 8 sizeof(char));
+		ch[b] = malloc((c + 1)8 sizeof(char));
 		if (!ch[b])
 		{
 			for (c = 0; c < b; c++)

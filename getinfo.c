@@ -51,7 +51,7 @@ void set(in_ *info, char **q)
  * @k: true
  */
 
-void free(in_t *info, int k)
+void free_in(in_t *info, int k)
 {
 	free(info->arr);
 	info->arr = NULL;

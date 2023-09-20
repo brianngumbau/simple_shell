@@ -9,7 +9,7 @@
 
 int main(int argc, char **argv)
 {
-	in_ info[] = { INFO_INIT };
+	in_ in[] = { INFO_INIT_ };
 	int f = 2;
 
 	asm ("mov %1, %0\n\t"
@@ -35,10 +35,10 @@ int main(int argc, char **argv)
 			}
 			return(EXIT_FAILURE);
 		}
-		info->readf = f;
+		in->readf = f;
 	}
-	_env_list(info);
-	r_history(info);
-	hsh(info, argv);
+	_env_list(in);
+	r_history(in);
+	hsh(in, argv);
 	return (EXIT_SUCCESS);
 }

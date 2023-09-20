@@ -76,17 +76,17 @@ int rep_alias(in_ *in)
 
 	for (a = 0; a < 10; a++)
 	{
-		nod = node_start(in->alias, in->argv[0], '=');
+		nod = node_start(in->alias, in->arr[0], '=');
 		if (!nod)
 			return (0);
-		free(in->argv[0]);
+		free(in->arr[0]);
 		add = str_chr(nod->str,'=');
 	       if(!add)
 	       	return (0);
 	       add = _str_dup(add + 1);
 	       if (!add)
 		       return (0);
-	       in->argv[0] = add;
+	       in->arr[0] = add;
 	}
 	return (1);
 }
@@ -101,31 +101,31 @@ int rep_vars(in_ *in)
 	int a = 0;
 	list_t *nod;
 
-	for (a = 0; in->argv[a]; a++)
+	for (a = 0; in->arr[a]; a++)
 	{
-		if (in->argv[a][0] != '$' || !in->argv[a][1])
+		if (in->arr[a][0] != '$' || !in->arr[a][1])
 			continue;
 
-		if (!_str_cmp(in->argv[a], "$?"))
+		if (!_str_cmp(in->arr[a], "$?"))
 		{
-			rep_str(&(in->argv[a]),
+			rep_str(&(in->arr[a]),
 					_str_dup(convertnumber(in->stat, 10, 0)));
 			continue;
 		}
-		if (!_str_cmp(in->argv[a], "$$"))
+		if (!_str_cmp(in->arr[a], "$$"))
 		{
-			rep_str(&(in->argv[a]),
+			rep_str(&(in->arr[a]),
 					_str_dup(convertnumber(getpid(), 10, 0)));
 			continue;
 		}
-		nod = node_start(in->env, &in->argv[a][1], '=');
-		if (node)
+		nod = node_start(in->env, &in->arr[a][1], '=');
+		if (nod)
 		{
-			rep_str(&(in->argv[a]),
+			rep_str(&(in->arr[a]),
 					_str_dup(str_chr(nod->str, '=') + 1));
 			continue;
 		}
-		re_str(&in->argv[a], _str_dup(""));
+		rep_str(&in->arr[a], _str_dup(""));
 	}
 	return (0);
 }
@@ -135,9 +135,9 @@ int rep_vars(in_ *in)
  * @nw: new string
  * Return: 1 or 0 otherwise
  */
-int re_str(char **ol, char *nw)
+int rep_str(char **ol, char *nw)
 {
 	free(*ol);
 	*ol = nw;
-	return (1)
+	return (1);
 }
