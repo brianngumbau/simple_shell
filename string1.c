@@ -1,80 +1,106 @@
 #include "shell.h"
 
 /**
- * strcpy - copies strings
- * @dest: destination
- * @src: source
- * Return: pointer to dest
+ * _strlen - A function that returns the length of a string
+ * @s: the string whose length to check
+ *
+ * Credit By Brian Ngumbau, Javis Mathews
+ * Return: length of string
  */
-char strcpy(char *dest, char *src)
-{
-	int z = 0;
 
-	if (d == s || s == 0)
-		return (d);
-	while (s[z])
-	{
-		d[z] = s[z];
-		z++;
-	}
-	d[z] = 0;
-	return (d);
-}
-/**
- * strdup - duplicates strings
- * @s: string to duplicate
- * Return: pointer to s
- */
-char strdup_(const char *s)
+int _strlen(char *s)
 {
-	int len = 0;
-	char *r;
+	int length = 0;
 
-	if (s == NULL)
-		return (NULL);
+	if (!s)
+		return (0);
+
 	while (*s++)
-		len++;
-	r = malloc(sizeof(char) * (len + 1));
-	if (!r)
-		return (NULL);
-	for (len++; len--;)
-		r[len] = *--s;
-	return (r);
+		length++;
+	return (length);
 }
+
 /**
- * _puts - prints input spring
- * @s: string to be printed
- * Return: void
+ * _strcmp - A program to compare two strings
+ * @fs: first string to be used
+ * @ss: the second string to be used
+ *
+ * Return: negative if fs < ss, positive if fs > ss, zero if fs == ss
  */
-void puts(char *s)
+
+int _strcmp(char *fs, char *ss)
+{
+	while (*fs && *ss)
+	{
+		if (*fs != *ss)
+			return (*fs - *ss);
+		fs++;
+		ss++;
+	}
+	if (*fs == *ss)
+		return (0);
+	else
+		return (*fs < *ss ? -1 : 1);
+}
+
+
+/**
+ * *starts_with - A functon to check if needle starts with haystack
+ * @haystack: string to search
+ * @needle: the substring to find
+ *
+ * Return: address of next char of haystack or NULL
+ */
+
+char *starts_with(const char *haystack, const char *needle)
+{
+	while (*needle && *haystack)
+		if (*needle++ != *haystack++)
+			return (NULL);
+	if (*needle)
+		return (NULL);
+	return ((char *)haystack);
+}
+
+/**
+ * *_strcat - This function concatenates two strings
+ *  @dest: the destination buffer to be used
+ *  @src: the source buffer to be used
+ *
+ *  Return: pointer to destination buffer
+ */
+
+char *_strcat(char *dest, char *src)
+{
+	char *ret = dest;
+
+	while (*dest)
+		dest++;
+	while (*src)
+		*dest++ = *src++;
+	*dest = *src;
+	return (ret);
+}
+
+
+/**
+ * _strcpy - A function that copies a string
+ * @dest: the destination
+ * @src: the source
+ * Return: pointer to destination
+ */
+
+char *_strcpy(char *dest, char *src)
 {
 	int a = 0;
 
-	if (!s)
-		return;
-	while (s[a] != '\0')
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[a])
 	{
-		_putchar(s[a]);
+		dest[a] = src[a];
 		a++;
 	}
-}
-/**
- * _putchar - writes a character to the standard output
- * @ch: character to print
- * Return: 1 or -1 incase of eror
- */
-
-int _putchar(char ch)
-{
-	static int a;
-	static char buff[write_BUFFSIZE];
-
-	if (ch == BUFFLUSH || a >= WRITE_BUFFSIZE)
-	{
-		write(1, buff, a);
-		a = 0;
-	}
-	if (ch != BUFFLUSH)
-		buff[a++] = ch;
-	return (1);
+	dest[a] = 0;
+	return (dest);
 }

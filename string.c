@@ -1,74 +1,106 @@
 #include "shell.h"
 
 /**
- * strlen_ - returns length of str string
- * @str: string
- * Return: length of string
+ * *_strdup - duplicates a string
+ * _strdup - A program that duplicates a string
+ * * @str: the string to duplicate
+ * Credit By Brian Ngumbau, Javis Mathews
+ * Return: pointer to the duplicated string
  */
 
-int strlen_(char *str)
+char *_strdup(const char *str)
 {
-	int k = 0;
+	int length = 0;
+	char *ptr;
 
-	if (!str)
-		return (0);
-
+	if (str == NULL)
+		return (NULL);
 	while (*str++)
-		k++;
-	return (k);
+		length++;
+	ptr = malloc(sizeof(char) * (length + 1));
+	if (!ptr)
+		return (NULL);
+	for (length++; length--;)
+		ptr[length] = *--str;
+	return (ptr);
 }
 
+
+
 /**
- * strcmp_ - compares two strings
- * @t1: 1st string
- * @t2: 2nd string
- * Return: -if s1 < s2, 0 if s1 == s2, + if s1 > s2
+ * *_strncpy - A function that copies a string
+ * @dest: the destination string to be copied to
+ * @src: the source string
+ * @cp: the amount of characters to be copied
+ * Return: the concatenated string
  */
 
-int strcmp_(char *t1, char *t2)
+char *_strncpy(char *dest, char *src, int cp)
 {
-	while (*t1 && *t2)
+	int a, b;
+	char *s = dest;
+
+	a = 0;
+
+	while (src[a] != '\0' && a < cp - 1)
 	{
-		if (*t1 != *t2)
-			return (*t1 - *st);
-		t1++;
-		t2++;
+		dest[a] = src[a];
+		a++;
 	}
-	if (*t1 == *t2)
-		return (0);
-	else
-		return (*s1 < *s2 ? -1 : 1);
+	if (a < cp)
+	{
+		b = a;
+		while (b < cp)
+		{
+			dest[b] = '\0';
+			b++;
+		}
+	}
+	return (s);
+}
+
+
+/**
+ * *_strncat - concatenates two strings
+ * @dest: the first string
+ * @src: the second string
+ * @cp: the amount of bytes to be maximally used
+ * *Return: the concatenated string
+ */
+
+char *_strncat(char *dest, char *src, int cp)
+{
+	int a, b;
+	char *s = dest;
+
+	a = 0;
+	b = 0;
+	while (dest[a] != '\0')
+		a++;
+	while (src[b] != '\0' && b < cp)
+	{
+		dest[a] = src[b];
+		a++;
+		b++;
+	}
+	if (b < cp)
+		dest[a] = '\0';
+	return (s);
 }
 
 /**
- * starts - checks if n starts with h
- * @h: string to start
- * @n: substring
- * Return: address of of h or NULL if it fails
+ * *_strchr - A function to locate a character in a string
+ * @s: the string to be parsed
+ * @c: the character to look for
+ * Return: (s) a pointer to the memory area s
  */
 
-char *starts(const char *h, const char *n)
+char *_strchr(char *s, char c)
 {
-	while (*n)
-		if (*n++ != *h++)
-			return (NULL);
-	return ((char *)h);
-}
+	do {
+		if (*s == c)
+			return (s);
+	} while (*s++ != '\0');
 
-/**
- * strcat_ - concatenates two strings
- * @d: dest buff
- * @s: source buff
- * Return: pointer to d
- */
-char *strcat_(char *d, char *s)
-{
-	char *r = d;
-
-	while (*d)
-		d++;
-	while (*s)
-		*d++ = *s++;
-	*d = *s;
-	return (r);
+	return (NULL);
 }

@@ -1,135 +1,86 @@
 #include "shell.h"
+/* Credit By Brian Ngumbau, Javis Mathews*/
 
 /**
- * err_atoi - converts a string into integer
- * @e: string to convert
- * Return: 0 otherwise 1 on error
+ * _puts - prints a string, followed by a new line, to stdout
+ * @str: the string to be printed
+ * Return: Not Specified
  */
-
-int err_atoi(char *e)
+void _puts(char *str)
 {
-	int x = 0;
-	unsigned long int res = 0;
+	int a = 0;
 
-	if (*e == '+')
-		e++;
-	for (x = 0; e[x] != '\0'; x++)
+	if (!str)
+		return;
+	while (str[a] != '\0')
 	{
-		if (e[x] >= '0' && e[x] <= '9')
-		{
-			res *= 10;
-			res += (e[x] - '0');
-			if (res > INT_MAX)
-				return (-1);
-		}
-		else
-			return (-1);
+		_putchar(str[a]);
+		a++;
 	}
-	return (res);
 }
 
 /**
- * printerr - prints error
- * @f: struct
- * @str: string with specified error type
- * Return: void
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
 
-void printerr(in_ *f, char *str)
+int _putchar(char c)
 {
-	_puts(f->fname);
-	_puts(": ");
-	printd(f->line_count, STDERR_FILENO);
-	_puts(": ");
-	_puts(f->argv[0]);
-	_puts(": ");
-	_puts(str);
+	static int a;
+	static char buf[WRITE_BUF_SIZE];
+
+	if (c == BUF_FLUSH || a >= WRITE_BUF_SIZE)
+	{
+		write(1, buf, a);
+		a = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[a++] = c;
+	return (1);
 }
 
 /**
- * printd - prints an integer
- * @in: input
- * @fd: filescriptor
- * Return: no. of characters printed
+ * _putfd - a function to write the character c to given fd
+ * @c: The character to written or printed
+ * @fd: The filedescriptor to used and wriiten to
+ * Return: On success 1.
+ *  On error, -1 is returned, and errno is set appropriately.
  */
 
-int printd(int in, int fd)
+int _putfd(char c, int fd)
 {
-	int (*put)(char) = _putchar;
-	int y, count = 0;
-	unsigned int ab, curr;
+	static int a;
+	static char buf[WRITE_BUF_SIZE];
 
-	if (fd == STDERR_FILENO)
-		put = _putchar;
-	if (in < 0)
+	if (c == BUF_FLUSH || a >= WRITE_BUF_SIZE)
 	{
-		ab = -input;
-		put('-');
-		count++;
+		write(fd, buf, a);
+		a = 0;
 	}
-	else
-		ab = in;
-	curr = ab;
-	for (y = 1000000000; y > 1; y /= 10)
-	{
-		if (ab / y)
-		{
-			put('0' + curr / y);
-			count++;
-		}
-		curr %= y;
-	}
-	put('0' + curr);
-	count++;
-
-	return (count);
+	if (c != BUF_FLUSH)
+		buf[a++] = c;
+	return (1);
 }
-/**
- * convertnumber - convert function
- * @n: no.
- * @b: the base
- * @f: flags
- * Return: a string
- */
-char *convertnumber(long int n, int b, int f)
-{
-	static char *arr;
-	static char buff[50];
-	char sg = 0;
-	char *str;
-	unsigned long k = n;
 
-	if (!(f & CONVERT_UNSIGNED) && num < 0)
+/**
+ * _putsfd -  a function that prints an input string
+ * @str: the string to be printed
+ * @fd: file descriptor to be printed
+ * Return: the number of chars put
+ */
+
+int _putsfd(char *str, int fd)
+{
+	int a = 0;
+
+	if (!str)
+		return (0);
+	while (*str)
 	{
-		k = -n;
-		sg = '-';
+		a += _putfd(*str++, fd);
 	}
-	arr = f & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	str = &buff[49];
-	*str = '\0';
-
-	do {
-		*--str = arr[n % base];
-		k /= base;
-	} while (k != 0);
-
-	if (sg)
-		*--str = sg;
-		return (str);
-}
-/**
- * rm_comments - replaces '#' with '\0'
- * @buff: address of string to modify
- * Return: empty
- */
-void rm_comments(char *buff)
-{
-	int u;
-
-	for (u = 0; buff[u] != '\0'; u++)
-		if (buff[u] == '#' && (!u || buff[u - 1] == ' '))
-		{
-			buff[u] = '\0';
-			break;
-		}
+	return (a);
 }

@@ -1,129 +1,62 @@
-<<<<<<< HEAD
-/*
- * File: errors.c
- * Auth: Brian ngumbau
- *       Javis mathews
- */
-
-#include <stdio.h>
-#include <stdlib.h>
-
-int main() {
-    double num1, num2, result;
-    char operator;
-
-    printf("Simple Calculator\n");
-    printf("Enter an expression (e.g., 2 + 3): ");
-
-    if (scanf("%lf %c %lf", &num1, &operator, &num2) != 3) {
-        printf("Invalid input. Please enter a valid expression.\n");
-        return 1;
-    }
-
-    switch (operator) {
-        case '+':
-            result = num1 + num2;
-            break;
-        case '-':
-            result = num1 - num2;
-            break;
-        case '*':
-            result = num1 * num2;
-            break;
-        case '/':
-            if (num2 == 0) {
-                printf("Error: Division by zero is not allowed.\n");
-                return 1;
-            }
-            result = num1 / num2;
-            break;
-        default:
-            printf("Error: Invalid operator '%c'. Supported operators are +, -, *, and /.\n", operator);
-            return 1;
-    }
-
-    printf("Result: %lf\n", result);
-
-    return 0;
-}
-
-=======
 #include "shell.h"
 
 /**
- * _puts - prints an input string
- * @str: the string
- * Return: void
+ * _eputs - print a character
+ * @str: A pointer to the NULL-terminated character array
+ * Credit By Brian Ngumbau, Javis Mathews
+ * Return: Not Specified
  */
 
-void _puts(char *str)
+void _eputs(char *str)
 {
-	int x = 0;
+	int a = 0;
 
 	if (!str)
 		return;
-	while (str[x] != '\0')
+	while (str[a] != '\0')
 	{
-		_putchar(str[x]);
-		x++;
+		_eputchar(str[a]);
+		a++;
 	}
 }
-/**
- * _putchar - writes character ch to stderr
- * @ch: character
- * Return: 1 on success
- */
-int _putchar(char ch)
-{
-	static int x;
-	static char buff[WRITE_BUFFSIZE];
 
-	if (ch == BUFFLUSH || x >= WRITE_BUFFSIZE)
+
+/**
+ * _eputchar - writes the character c to stderr
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _eputchar(char c)
+{
+	static int a;
+	static char buf[WRITE_BUF_SIZE];
+
+	if (c == BUF_FLUSH || a >= WRITE_BUF_SIZE)
 	{
-		write(2, buff, x);
-		x = 0;
+		write(2, buf, a);
+		a = 0;
 	}
-	if (ch != BUFFLUSH)
-		buff[x++] = ch;
+	if (c != BUF_FLUSH)
+		buf[a++] = c;
 	return (1);
 }
 
-/**
- * _putf - writes ch to given file descriptor
- * @ch: character to print
- * @f: file descriptor to write
- * Return: 1
- */
-int _putf(char ch, int f)
-{
-	static int x;
-	static char buff[BUFF_SIZE];
 
-	if (ch == BUFFLUSH || x >= WRITE_BUFFSIZE)
-	{
-		write(f, buff, x);
-		x = 0;
-	}
-	if (ch != BUFFLUSH)
-		buff[x++] = ch;
-	return (1);
-}
 /**
- * _putsf - prints an input string
- * @str: string to be printed
- * @f: file descriptor
- * Return: number of chars
+ * bfree - frees a pointer and set it to “NULL”
+ * @ptr: address of the pointer to free
+ * Return: 1 if freed, otherwise 0.
  */
-int _putsf(char *str, int f)
-{
-	int x = 0;
 
-	if (!str)
-		return (0);
-	while (*str)
+int bfree(void **ptr)
+{
+	if (ptr && *ptr)
 	{
-		x += _putf(*str++, f);
+		free(*ptr);
+		*ptr = NULL;
+		return (1);
 	}
-	return (x);
+	return (0);
 }
->>>>>>> ac4ce4eb285c3cf9e85adb0c0c668252c5d310eb

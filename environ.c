@@ -1,86 +1,102 @@
 #include "shell.h"
+/* Credit By Brian Ngumbau, Javis Mathews*/
 
 /**
- * _env - prints current environ
- * @in: Struct with arguments
- * Return: 0
+ * _myenv - prints the current environment
+ * @info: stores various pieces of information
+ * and settings for a shell program
+ * Return: Always 0
  */
-int _env(in_ *in)
+
+int _myenv(info_x *info)
 {
-	print_strlist(in->env);
+	print_list_str(info->env);
 	return (0);
 }
 
 /**
- * getenv - gets value of environ variable
- * @in: Struct with arguments
- * @nm: environ variable name
+ * _getenv - gets the value of an environ variable
+ * @info: stores various pieces of information
+ * and settings for a shell program
+ * @name: env var name
+ *
+ *
  * Return: the value
  */
-char *getenv_(in_ *in, const char *nm)
-{
-	list_t *nod = in->env;
-	char *x;
 
-	while (nod)
+char *_getenv(info_x *info, const char *name)
+{
+	list_t *node = info->env;
+	char *p;
+
+	while (node)
 	{
-		x = starts(nod->str, nm);
-		if (x && *x)
-			return (x);
-		nod = nod->next;
+		p = starts_with(node->str, name);
+		if (p && *p)
+			return (p);
+		node = node->next;
 	}
+
 	return (NULL);
 }
 
+
+
 /**
- * setenv - Initialize new environ variable
- * @in: Struct with arguments
- * Return: 0
+ * _mysetenv - A program to initialize a new environment variable,
+ * or modify an existing one
+ * @info: The structure of information for our shell program.
+ *
+ * Return: Always 0
  */
-int setenv(in_ *in)
+
+int _mysetenv(info_x *info)
 {
-	if (in->argc != 3)
+	if (info->argc != 3)
 	{
-		_puts("Number of arguments is incorrect\n");
+		_eputs("Incorrect number of arguements\n");
 		return (1);
 	}
-	if (setenv(in, in->argv[1], in->argv[2]))
+	if (_setenv(info, info->argv[1], info->argv[2]))
 		return (0);
 	return (1);
 }
 
 /**
- * unsetenv - Removes environ variable
- * @in: Struct with arguments
- * Return: 0
+ * _myunsetenv - A function to remove an environment variable
+ * @info: The structure of information for our shell program
+ * Return: Always 0
  */
-int unsetenv(in_ *in)
+
+int _myunsetenv(info_x *info)
 {
 	int a;
 
-	if (in->argc == 1)
+	if (info->argc == 1)
 	{
-		_puts("Very few arguements.\n");
+		_eputs("Too few arguements.\n");
 		return (1);
 	}
-	for (a = 1; a <= in->argc; a++)
-		setenv(in, in->argv[a]);
+	for (a = 1; a <= info->argc; a++)
+		_unsetenv(info, info->argv[a]);
+
 	return (0);
 }
 
 /**
- * _env_list - populates environ linked list
- * @in: Struct with arguments
- * Return: 0
+ * populate_env_list - A function to populate "env" linked list
+ * @info: The structure of information for our shell program
+ * Return: 0 on success
  */
-int _env_list(in_ *in)
-{
-	list_t *nod = NULL;
-	size_t b;
 
-	for (b = 0; environ[b]; b++)
-		addnode_end(&nod, environ[b], 0);
-	in->env = nod;
+int populate_env_list(info_x *info)
+{
+	list_t *node = NULL;
+	size_t a;
+
+	for (a = 0; environ[a]; a++)
+	add_node_end(&node, environ[a], 0);
+	info->env = node;
+
 	return (0);
 }
-

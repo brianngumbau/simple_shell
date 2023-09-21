@@ -1,92 +1,123 @@
 #include "shell.h"
 
 /**
- * _exit - exits shell
- * @in: Struct with arguments
- * Return: exit status
+ * _myhistory - displays the history list, one command by line, preceded
+ * with line numbers, starting at 0.
+ * @info: stores various pieces of information
+ * and settings for a shell program
+ * Credit By Brian Ngumbau, Javis Mathews
+ * Return: Always 0
  */
-int _exit(in_ *in)
-{
-	int exitch;
 
-	if (in->argv[1])
-	{
-		exitch = err_atoi(in->argv[1]);
-		if (exitch == -1)
-		{
-			in->stat = 2;
-			printerror(in, "Illegal: ");
-			_puts(info->argv[1]);
-			_putchar('\n');
-			return (1);
-		} in->num_err = err_atoi(in->argv[1]);
-		return (-2);
-	}
-	in->num_ = -1;
-	return (-2);
-}
-
-/**
- * _cd - changes directory
- * @in: Struct with arguments
- * Return: 0
- */
-int _cd(in_ *in)
+int _myhistory(info_x *info)
 {
-	char *c, *d, buff[1024];
-	int cdir_t;
-
-	c = getcwd(buff, 1024);
-	if (!c)
-		_puts("TODO: >>getcwd failure here<<\n");
-	if (!in->argv[1])
-	{
-		d = getenv_(in, "Home=");
-		if (!d)
-			cdir_t =
-				chdir((d = getenv(in, "Pwd=")) ? d : "/");
-		else
-			cdir_t = chdir(d);
-	}
-	else if (_str_cmp(in->argv[1], "-") == 0)
-	{
-		if (!getenv_(in, "Oldpwd="))
-		{
-			_puts(s);
-			_putchar('\n');
-			return (1);
-		}
-		_puts(getenv_(in, "Olpwd=")), _putchar('\n');
-		cdir_t =
-			chdir((dir = _getenv(info, "OLDPWD=")) ? d : "/");
-	}
-	else
-		cdir_t = chdir(in->argv[1]);
-	if (cdir_t == -1)
-	{
-		printerr(in, "can't change directory ");
-		_puts(in->argv[1]), _putchar('\n');
-	}
-	else
-{
-		setenv(in, "Olpwd", getenv_(in, "Pwd="));
-		setenv(in, "PWD", getcwd(buff, 1024));
-	}
+	print_list(info->history);
 	return (0);
 }
 
 /**
- * help - changes the current directory of the process
- * @in: Struct with arguments
- * Return: 0
+ * unset_alias - sets alias to string
+ * @info: stores various pieces of information
+ * and settings for a shell program
+ * @str: the string alias
+ *
+ * Return: Always 0 on success, 1 on error
  */
-int help(in_ *in)
-{
-	char **arr;
 
-	arr = in->argv;
-	_puts("Function not yet implemented help call works \n");
-	if (0)
-		_puts(*arr);
+int unset_alias(info_x *info, char *str)
+{
+	char *p, c;
+	int ret;
+
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	c = *p;
+	*p = 0;
+	ret = delete_node_at_index(&(info->alias),
+		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+	*p = c;
+	return (ret);
+}
+
+/**
+ * set_alias - This sets alias to string
+ * @info: stores various pieces of information
+ * and settings for a shell program
+ * @str: the string alias
+ *
+ * Return: Always 0 on success, 1 on error
+ */
+
+int set_alias(info_x *info, char *str)
+{
+	char *p;
+
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	if (!*++p)
+		return (unset_alias(info, str));
+
+	unset_alias(info, str);
+
+	return (add_node_end(&(info->alias), str, 0) == NULL);
+}
+
+/**
+ * print_alias - A function to print an alias string
+ * @node: the alias node
+ *
+ * Return: Always 0 on success, 1 on error
+ */
+
+int print_alias(list_t *node)
+{
+	char *p = NULL, *a = NULL;
+
+	if (node)
+	{
+		p = _strchr(node->str, '=');
+		for (a = node->str; a <= p; a++)
+			_putchar(*a);
+		_putchar('\'');
+		_puts(p + 1);
+		_puts("'\n");
+		return (0);
+	}
+	return (1);
+}
+
+/**
+ * _myalias - mimics the alias builtin
+ * @info: stores various pieces of information
+ * and settings for a shell program
+ * Return: Always 0 on success
+ */
+
+int _myalias(info_x *info)
+{
+	int a = 0;
+	char *p = NULL;
+	list_t *node = NULL;
+
+	if (info->argc == 1)
+	{
+		node = info->alias;
+		while (node)
+		{
+			print_alias(node);
+			node = node->next;
+		}
+		return (0);
+	}
+	for (a = 1; info->argv[a]; a++)
+	{
+		p = _strchr(info->argv[a], '=');
+		if (p)
+			set_alias(info, info->argv[a]);
+	else
+		print_alias(node_starts_with(info->alias, info->argv[a], '='));
+	}
 	return (0);
 }

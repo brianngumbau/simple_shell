@@ -1,73 +1,78 @@
 #include "shell.h"
 
+/* Credit By Brian Ngumbau, Javis Mathews*/
 /**
- * inter_ - checks if shell is in interactive mode
- * @in: address of struct
- * Return: 1 if it succeeds 0 otherwise
+ * interactive - A function that returns true
+ * if shell is interactive mode
+ * @info: struct param
+ * Return: 1 if interactive mode, 0 otherwise
  */
 
-int inter_(info_t *in)
+int interactive(info_x *info)
 {
-	return (isatty(STDIN_FILENO) && in->readf <= 2);
+	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
 /**
- * delim_ - checks for delimeter characters
- * @ch: char to check
- * @del: delimeter string
- * Return: 1 or 0 if it fails
+ * is_delim - A function to check if character is a delimeter
+ * @c: the char to check
+ * @delim: the delimeter string
+ * Return: 1 if true, 0 if false
  */
-int delim_(char ch, char *del)
+
+int is_delim(char c, char *delim)
 {
-	while (*del)
-		if (*del++ == ch)
+	while (*delim)
+		if (*delim++ == c)
 			return (1);
+
 	return (0);
 }
 
 /**
- * isalpha_ - checks for alphabetic chars
- * @ch: character
- * Return: 1 if ch is alapabetic 0 otherwise
+ * _isalpha - A function that checks for alphabetic character
+ * @c: The character to input
+ * Return: 1 if c is alphabetic, 0 otherwise
  */
 
-int isalpha_(int ch)
+int _isalpha(int c)
 {
-	if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
 	else
 		return (0);
 }
+
 /**
- * atoi_ - converts string to integer
- * @str: string to convert
- * Return: integer or 0 if no numbers in string
+ * _atoi - A function to convert a string to an integer
+ * @s: the string to be converted
+ * Return: 0 if no numbers in string, converted number otherwise
  */
 
-int atoi_(char *str)
+int _atoi(char *s)
 {
-	int a, s = 1, f = 0, out;
-	unsigned int res = 0;
+	int a, sign = 1, flag = 0, output;
+	unsigned int result = 0;
 
-	for (a = 0; str[a] != '\0' && f != 2; a++)
+	for (a = 0;  s[a] != '\0' && flag != 2; a++)
 	{
-		if (str[a] == '-')
-			s *= -1;
+		if (s[a] == '-')
+			sign *= -1;
 
-		if (str[a] >= '0' && str[a] <= '9')
+		if (s[a] >= '0' && s[a] <= '9')
 		{
-			f = 1;
-			res *= 10;
-			res += (str[a] - '0');
+			flag = 1;
+			result *= 10;
+			result += (s[a] - '0');
 		}
-		else if (f == 1)
-			f = 2;
+		else if (flag == 1)
+			flag = 2;
 	}
 
-	if (s == -1)
-		out = -res;
+	if (sign == -1)
+		output = -result;
 	else
-		out = res;
+		output = result;
 
-	return (out);
+	return (output);
 }
